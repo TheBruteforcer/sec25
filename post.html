@@ -1,0 +1,46 @@
+
+<style>
+            h1 {
+                font-family:"Cairo";
+                font-size: 4vw;
+                align-content: center;
+                text-align: center;
+            }
+            body {
+                margin : 20px;
+                font-family : "Cairo";
+            }
+</style>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المشاركة</title>
+</head>
+<body dir="rtl">
+    <div id="post-container"></div>
+
+    <script>
+        async function fetchPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id'); // Get post ID from URL
+            try {
+                const response = await fetch(`https://nmo.onrender.com/get-post?id=${postId}`); // Update API endpoint accordingly
+                const post = await response.json();
+                
+                const postContainer = document.getElementById("post-container");
+                postContainer.innerHTML = `
+                    <h1>${post.title}</h1>
+                    ${post.html}
+                    <a href="index.html">عودة إلى المدونة</a> <!-- Link back to the main page -->
+                `;
+            } catch (error) {
+                console.error("Error fetching post:", error);
+            }
+        }
+
+        fetchPost();
+    </script>
+</body>
+</html>
